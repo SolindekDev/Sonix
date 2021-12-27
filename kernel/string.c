@@ -37,3 +37,17 @@ char* convinttostr(int n, char* str) {
 
     revstr(str);
 }
+
+int str_to_int(char* ch)
+{
+    int n = 0;
+    int p = 1;
+    int strlength = strlen(ch);
+    int i;
+    for (i = strlength-1;i>=0;i--)
+    {
+        n += ((int)(ch[i] - '0')) * p;
+        p *= 10;
+    }
+    return n;
+}
