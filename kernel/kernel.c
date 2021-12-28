@@ -24,7 +24,11 @@ void start_kernel() {
     print(" Press Space to open shell", WHITE_ON_GRAY);
     set_cursor_offset(get_offset(vec.mLeft + 2, vec.mTop + 5));
     print(" Press Enter to shutdown computer", WHITE_ON_GRAY);
-    set_cursor_offset(get_offset(MAX_ROWS, MAX_COLS));
+    set_cursor_offset(get_offset(MAX_COLS - lenstr(" by SolindekDev"), 24));
+    print(" by SolindekDev", WHITE_ON_BEAUTY_BLUE);
+    set_cursor_offset(get_offset(MAX_COLS - lenstr(" Sonix OS 1.0v"), 23));
+    print(" Sonix OS 1.0v", WHITE_ON_BEAUTY_BLUE);
+    set_cursor_offset(get_offset(MAX_COLS, MAX_ROWS));
     // while(1) {
     //     const char *sc_name[] = { "ERROR", "Esc", "1", "2", "3", "4", "5", "6", 
     //         "7", "8", "9", "0", "-", "=", "Backspace", "Tab", "Q", "W", "E", 

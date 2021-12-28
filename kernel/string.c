@@ -38,11 +38,11 @@ char* convinttostr(int n, char* str) {
     revstr(str);
 }
 
-int str_to_int(char* ch)
+int convstrtoint(char* ch)
 {
     int n = 0;
     int p = 1;
-    int strlength = strlen(ch);
+    int strlength = lenstr(ch);
     int i;
     for (i = strlength-1;i>=0;i--)
     {
