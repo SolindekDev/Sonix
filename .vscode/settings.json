@@ -4,6 +4,7 @@
         "types.h": "c",
         "display.h": "c",
         "colors.h": "c",
-        "screen.h": "c"
+        "screen.h": "c",
+        "kernel.h": "c"
     }
 }

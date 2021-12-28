@@ -1,0 +1,1 @@
+void disk_floppy_detect();

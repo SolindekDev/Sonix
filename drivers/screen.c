@@ -31,6 +31,13 @@ void print(char* message, int type) {
     }
 }
 
+void print_backspace(int type) {
+    int offset = get_cursor_offset()-2;
+    int row = get_offset_row(offset);
+    int col = get_offset_col(offset);
+    print_char(0x08, col, row, type);
+}
+
 int print_char(char c, int col, int row, char attr) {
     unsigned char *vidmem = (unsigned char*) VIDEO_ADDRESS;
     if (!attr) attr = WHITE_ON_BLACK;

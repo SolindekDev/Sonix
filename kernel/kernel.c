@@ -4,6 +4,10 @@
 #include "./colors.h"
 #include "../drivers/screen.h"
 #include "./string.h"
+#include "./disk.h"
+#include "../drivers/keyboard.h"
+
+void keyboard(char* name, char* letter);
 
 void start_kernel() {
     int offset = init_video();
@@ -28,26 +32,28 @@ void start_kernel() {
     print(" by SolindekDev", WHITE_ON_BEAUTY_BLUE);
     set_cursor_offset(get_offset(MAX_COLS - lenstr(" Sonix OS 1.0v"), 23));
     print(" Sonix OS 1.0v", WHITE_ON_BEAUTY_BLUE);
-    set_cursor_offset(get_offset(MAX_COLS, MAX_ROWS));
-    // while(1) {
-    //     const char *sc_name[] = { "ERROR", "Esc", "1", "2", "3", "4", "5", "6", 
-    //         "7", "8", "9", "0", "-", "=", "Backspace", "Tab", "Q", "W", "E", 
-    //         "R", "T", "Y", "U", "I", "O", "P", "[", "]", "Enter", "Lctrl", 
-    //         "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "`", 
-    //         "LShift", "\\", "Z", "X", "C", "V", "B", "N", "M", ",", ".", 
-    //         "/", "RShift", "Keypad *", "LAlt", "Spacebar"};
-    //     const char sc_ascii[] = { '?', '?', '1', '2', '3', '4', '5', '6',     
-    //         '7', '8', '9', '0', '-', '=', '?', '?', 'Q', 'W', 'E', 'R', 'T', 'Y', 
-    //         'U', 'I', 'O', 'P', '[', ']', '?', '?', 'A', 'S', 'D', 'F', 'G', 
-    //         'H', 'J', 'K', 'L', ';', '\'', '`', '?', '\\', 'Z', 'X', 'C', 'V', 
-    //         'B', 'N', 'M', ',', '.', '/', '?', '?', '?', ' '};
-    //     u8 code = port_byte_in(0x60);
+    set_cursor_offset(get_offset(0, 0));
 
-    //     if (code > 57) return;
+    // set_cursor_offset(get_offset(MAX_COLS, MAX_ROWS));
 
-    //     if (code == 1) {
-    //         set_cursor_offset(get_offset(0, 0));
-    //         print("Si", WHITE_ON_BEAUTY_BLUE);
-    //     }
-    // }
+    while(1) {
+        u8 scancode;
+        scancode = port_word_in(0x60);
+
+        if (scancode > 57) return;
+        if (scancode == 0x0E) {
+            keyboard("Backspace", "Backspace");
+            print("SSS", WHITE_ON_BLUE);
+        } else if (scancode == 0x1C) {
+            print("SS", WHITE_ON_BLUE);
+            keyboard("Enter", "Enter");
+        } else {
+            keyboard("Test", "Test");
+            print("S", WHITE_ON_BLUE);
+        }
+    }
+}
+
+void keyboard(char* name, char* letter) {
+    print(name, WHITE_ON_BEAUTY_BLUE);
 }
