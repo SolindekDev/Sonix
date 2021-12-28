@@ -1,65 +1,35 @@
-int lenstr(char* str) {
-    int len = 0;
-    while (str[len] != '\0') {
-        len++;
-    }
-    return len;
-}
+#include "string.h"
 
-int cmpstr(char* str1, char* str2) {
-    for(int i = 0; str1[i] == str2[i]; i++) {
-        if (str1[i] == '\0') return 0;
-        if (str2[i] == '\0') return 0;
-    }
-    
-    return str1[0] - str2[0];
-}
-
-void revstr(char s[]) {
+void reverse(char s[]) {
     int c, i, j;
-    for (i = 0, j = lenstr(s)-1; i < j; i++, j--) {
+    for (i = 0, j = strlen(s)-1; i < j; i++, j--) {
         c = s[i];
         s[i] = s[j];
         s[j] = c;
     }
 }
 
-char* convinttostr(int n, char* str) {
-    int i, sign;
-    if ((sign = n) < 0) n = -n;
-    i = 0;
-    do {
-        str[i++] = n % 10 + '0';
-    } while ((n /= 10) > 0);
-
-    if (sign < 0) str[i++] = '-';
-    str[i] = '\0';
-
-    revstr(str);
+int strlen(char s[]) {
+    int i = 0;
+    while (s[i] != '\0') ++i;
+    return i;
 }
 
-int convstrtoint(char* ch)
-{
-    int n = 0;
-    int p = 1;
-    int strlength = lenstr(ch);
+void append(char s[], char n) {
+    int len = strlen(s);
+    s[len] = n;
+    s[len+1] = '\0';
+}
+
+void backspace(char s[]) {
+    int len = strlen(s);
+    s[len-1] = '\0';
+}
+
+int strcmp(char s1[], char s2[]) {
     int i;
-    for (i = strlength-1;i>=0;i--)
-    {
-        n += ((int)(ch[i] - '0')) * p;
-        p *= 10;
+    for (i = 0; s1[i] == s2[i]; i++) {
+        if (s1[i] == '\0') return 0;
     }
-    return n;
-}
-
-void convinttoascii(int n, char str[]) {
-    int i, sign;
-    if ((sign = n) < 0) n = -n;
-    i = 0;
-    do {
-        str[i++] = n % 10 + '0';
-    } while ((n /= 10) > 0);
-
-    if (sign < 0) str[i++] = '-';
-    str[i] = '\0';
+    return s1[i] - s2[i];
 }

@@ -1,6 +1,20 @@
-#include "ports.h"
-#include "../kernel/colors.h"
-#include "screen.h"
+#include "./ports.h"
+
+#define VIDEO_ADDRESS 0xb8000
+#define MAX_ROWS 25
+#define MAX_COLS 80
+#define REG_SCREEN_CTRL 0x3d4
+#define REG_SCREEN_DATA 0x3d5
+#define WHITE_ON_BLACK 0x0f
+#define RED_ON_WHITE 0xf4
+
+struct vec2 {
+    int x;
+    int y;
+    int mTop;
+    int mLeft;
+    int saveOnStart;
+};
 
 int get_cursor_offset();
 void set_cursor_offset(int offset);
@@ -9,7 +23,7 @@ int get_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
 
-void print(char* message, int type) {
+void print(char* message) {
     int col = -1;
     int row = -1;
 
@@ -25,17 +39,17 @@ void print(char* message, int type) {
     int i = 0;
     while (message[i] != 0) {
         i++;
-        offset = print_char(message[i], col, row, type);
+        offset = print_char(message[i], col, row, WHITE_ON_BLACK);
         row = get_offset_row(offset);
         col = get_offset_col(offset);
     }
 }
 
-void print_backspace(int type) {
+void print_backspace() {
     int offset = get_cursor_offset()-2;
     int row = get_offset_row(offset);
     int col = get_offset_col(offset);
-    print_char(0x08, col, row, type);
+    print_char(' ', col, row, WHITE_ON_BLACK);
 }
 
 int print_char(char c, int col, int row, char attr) {
@@ -65,27 +79,34 @@ int print_char(char c, int col, int row, char attr) {
 }
 
 int get_cursor_offset() {
-    port_byte_out(REG_SCREEN_CTRL, 14);
-    int offset = port_byte_in(REG_SCREEN_DATA) << 8;
-    port_byte_out(REG_SCREEN_CTRL, 15);
-    offset += port_byte_in(REG_SCREEN_DATA);
+    outb(REG_SCREEN_CTRL, 14);
+    int offset = inb(REG_SCREEN_DATA) << 8;
+    outb(REG_SCREEN_CTRL, 15);
+    offset += inb(REG_SCREEN_DATA);
     return offset * 2; 
 }
 
 void set_cursor_offset(int offset) {
     offset /= 2;
-    port_byte_out(REG_SCREEN_CTRL, 14);
-    port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset >> 8));
-    port_byte_out(REG_SCREEN_CTRL, 15);
-    port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
+    outb(REG_SCREEN_CTRL, 14);
+    outb(REG_SCREEN_DATA, (unsigned char)(offset >> 8));
+    outb(REG_SCREEN_CTRL, 15);
+    outb(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
 }
 
-void clear_screen(int type) {
+void set_cursor_offset_pos(int row, int col) {
+    outb(REG_SCREEN_CTRL, 14);
+    outb(REG_SCREEN_DATA, col);
+    outb(REG_SCREEN_CTRL, 15);
+    outb(REG_SCREEN_DATA, row);
+}
+
+void clear_screen() {
     char* screen = VIDEO_ADDRESS;
 
     for (int i = 0; i < MAX_ROWS; i++) {
         for (int j = 0; j < MAX_COLS; j++) {
-            print_char(' ', j, i, type);
+            print_char(' ', j, i, WHITE_ON_BLACK);
         }
     }
     set_cursor_offset(get_offset(0, 0));
@@ -103,7 +124,7 @@ int get_offset_col(int offset) {
     return (offset - (get_offset_row(offset)*2*MAX_COLS))/2; 
 }
 
-int draw_rec(struct vec2 vec, int colorRect, int colorBack) {
+int draw_rec(struct vec2 vec, int colorRect) {
     if (vec.x > MAX_COLS || vec.y > MAX_ROWS) return 0;
 
     for (int i = 0; i < vec.y; i++) {

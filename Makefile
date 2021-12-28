@@ -1,11 +1,11 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h)
+C_SOURCES = $(wildcard kernel/*.c cpu/*.c)
+HEADERS = $(wildcard kernel/*.h cpu/*.h)
 OBJ_FILES = ${C_SOURCES:.c=.o}
 
 all: run
 
 kernel.bin: boot/kernel_entry.o ${OBJ_FILES}
-	x86_64-elf-ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+	x86_64-elf-ld -m elf_i386 -o $@ -Ttext 0x1000 $^ cpu/interrupt.o --oformat binary
 
 os-image.bin: boot/mbr.bin kernel.bin
 	cat $^ > $@

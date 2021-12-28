@@ -1,21 +1,19 @@
-#include "../kernel/types.h"
-
-u8 port_byte_in (u16 port) {
-    u8 result;
+unsigned char inb(unsigned short port) {
+    unsigned char result;
     __asm__("in %%dx, %%al" : "=a" (result) : "d" (port));
     return result;
 }
 
-void port_byte_out (u16 port, u8 data) {
+void outb(unsigned short port, unsigned char data) {
     __asm__("out %%al, %%dx" : : "a" (data), "d" (port));
 }
 
-u16 port_word_in (u16 port) {
-    u16 result;
+unsigned short inw(unsigned short port) {
+    unsigned short result;
     __asm__("in %%dx, %%ax" : "=a" (result) : "d" (port));
     return result;
 }
 
-void port_word_out (u16 port, u16 data) {
+void outw(unsigned short port, unsigned short data) {
     __asm__("out %%ax, %%dx" : : "a" (data), "d" (port));
 }
