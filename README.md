@@ -22,4 +22,4 @@ make
 
 ## Screenshots
 <img src="https://i.imgur.com/YLtPUz6.png">
-<img src="https://i.imgur.com/tfEPYVP.png">
+<img src="https://i.imgur.com/YnrvFmM.png">
