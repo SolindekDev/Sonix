@@ -5,6 +5,7 @@ This is a simple **x86_64 32bit operating system**. **Sonix** name is taken from
 ### This helped me sooo much some of code is from here:
 - https://github.com/cfenollosa/os-tutorial
 - https://github.com/FRosner/FrOS/
+- https://github.com/torvalds/linux
 
 ### To build this OS you need to open cmd in folder where is Makefile file and write this command:
 ```shell
