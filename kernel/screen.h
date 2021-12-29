@@ -1,6 +1,9 @@
 #ifndef SCREEN_H
     #define SCREEN_H 0x1
 
+    #define MAX_ROWS 25
+    #define MAX_COLS 80
+
     struct vec2 {
         int x;
         int y;

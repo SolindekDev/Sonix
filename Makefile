@@ -1,5 +1,5 @@
-C_SOURCES = $(wildcard kernel/*.c cpu/*.c)
-HEADERS = $(wildcard kernel/*.h cpu/*.h)
+C_SOURCES = $(wildcard kernel/*.c cpu/*.c kernel/computer/*.c)
+HEADERS = $(wildcard kernel/*.h cpu/*.h kernel/computer/*.h)
 OBJ_FILES = ${C_SOURCES:.c=.o}
 
 all: run

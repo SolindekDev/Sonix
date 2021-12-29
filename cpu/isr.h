@@ -67,6 +67,9 @@ extern void irq15();
 #define IRQ14 46
 #define IRQ15 47
 
+#define MENU_MODE 0x000134
+#define SHELL_MODE 0x000135
+
 typedef struct {
    u32 ds; 
    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax; 

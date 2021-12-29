@@ -1,4 +1,5 @@
 #include "./ports.h"
+#include "./string.h"
 
 #define VIDEO_ADDRESS 0xb8000
 #define MAX_ROWS 25
@@ -23,6 +24,20 @@ int get_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
 
+void better_print(char* message) {
+    int length = strlen(message);
+    for (int i = 0; i < length; i++) {
+        print_char(message[i], -1, -1, WHITE_ON_BLACK);
+    }
+}
+
+void better_print_color(char* message, int type) {
+    int length = strlen(message);
+    for (int i = 0; i < length; i++) {
+        print_char(message[i], -1, -1, type);
+    }
+}
+
 void print(char* message) {
     int col = -1;
     int row = -1;
@@ -40,6 +55,28 @@ void print(char* message) {
     while (message[i] != 0) {
         i++;
         offset = print_char(message[i], col, row, WHITE_ON_BLACK);
+        row = get_offset_row(offset);
+        col = get_offset_col(offset);
+    }
+}
+
+void print_color(char* message, int type) {
+    int col = -1;
+    int row = -1;
+
+    int offset;
+    if (col >= 0 && row >= 0)
+        offset = get_offset(col, row);
+    else {
+        offset = get_cursor_offset();
+        row = get_offset_row(offset);
+        col = get_offset_col(offset);
+    }
+
+    int i = 0;
+    while (message[i] != 0) {
+        i++;
+        offset = print_char(message[i], col, row, type);
         row = get_offset_row(offset);
         col = get_offset_col(offset);
     }
