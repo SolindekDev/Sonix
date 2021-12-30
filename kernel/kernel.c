@@ -7,7 +7,7 @@
 #include "./sys/memory_info.h"
 #include "./sys/cpuid.h"
 #include "./sys/power.h"
-// #include "./sys/disk.h"
+#include "./sys/disk.h"
 
 int input_menu_active = 1;
 char* username = "user";
@@ -26,7 +26,7 @@ void start_kernel() {
     clear_screen();
     isr_install();
 
-    for (int i = 0; i < MAX_ROWS; i++) {
+    for (int i = 0; i < 25; i++) {
         for (int j = 0; j < MAX_COLS; j++) {
             print_char(' ', j, i, WHITE_ON_BEAUTY_BLUE);
         }
@@ -76,10 +76,8 @@ void shell() {
 void input_menu(int code) {
     if (input_menu_active == 1) {
         if (code == 0) {
-            // ehhhh
-            clear_screen();
-            better_print("Halt the CPU...");
-            asm volatile("hlt");
+            input_menu_active = 0;
+            shutdown();
         } else {
             input_menu_active = 0;
             shell();
@@ -88,7 +86,30 @@ void input_menu(int code) {
 }
 
 void input(char* input) {
-    better_print(input);
-    better_print("\n");
+    if (strcmp(input, "shutdown")==1) {
+        shutdown();
+    } else if (strcmp(input, "clear")==1){
+        clear_screen();
+        better_print("\n");
+    } else if (strcmp(input, "")==1 || strcmp(input, " ")==1){
+    } else if (strcmp(input, "disks")) {
+        floppy_disk_detect();
+        better_print("\n");
+    } else if (strcmp(input, "help")) {
+        better_print("help      - Show list of commands\n");
+        better_print("disks     - Show list of disks\n");
+        better_print("neofetch  - Show information about everything \n");
+        better_print("reboot    - Reboot the computer\n");
+    } else if (strcmp(input, "neofetch")) {
+        better_print_color("\nOS: ", 0xf03);
+        better_print("SonixOS\n");
+        better_print_color("Shell: ", 0xf03);
+        better_print("Sash\n\n");
+    } else {
+        better_print("sash: ");
+        better_print(input);
+        better_print(": command not found");
+        better_print("\n");
+    } 
     write_prompt(username);
 }

@@ -27,9 +27,18 @@ void backspace(char s[]) {
 }
 
 int strcmp(char s1[], char s2[]) {
-    int i;
-    for (i = 0; s1[i] == s2[i]; i++) {
-        if (s1[i] == '\0') return 0;
+    int length_s1 = strlen(s1);
+    int length_s2 = strlen(s2);
+
+    if (length_s1 == length_s2) {
+        for (int i = 0; i < length_s1; i++) {
+            if (s1[i] != s2[i]) {
+                return 0;
+            }
+        }
+    } else {
+        return 0;
     }
-    return s1[i] - s2[i];
+
+    return 1;
 }
