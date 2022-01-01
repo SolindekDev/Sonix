@@ -22,5 +22,5 @@ make
 - `cat`
 
 ## Screenshots
-<img src="https://i.imgur.com/YLtPUz6.png">
+<img src="https://cdn.discordapp.com/attachments/859467010969829389/926522486621880360/unknown.png">
 <img src="https://i.imgur.com/YnrvFmM.png">

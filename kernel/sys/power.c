@@ -4,7 +4,7 @@
 void shutdown() {
     clear_screen();
     better_print("Shutting down the computer...");
-    outw((unsigned short)0xB004, (unsigned char)0x00002000);
+    asm volatile("hlt");
 }
 
 void reboot(){

@@ -9,3 +9,10 @@
 #define WHITE_ON_LIGHT_GRAY 0x8f
 #define WHITE_ON_BEAUTY_BLUE 0x9f
 #define RED_ON_WHITE 0xf4
+
+#define BLACK 0x0f
+#define WHITE 0xf2
+#define PINK 0xffd0
+#define GREEN 0xffa0
+#define RED 0xffe0
+#define AQUA 0xffc0
