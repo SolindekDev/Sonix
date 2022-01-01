@@ -7,6 +7,9 @@ This is a simple **x86_64 32bit operating system**. **Sonix** name is taken from
 - https://github.com/FRosner/FrOS/
 - https://github.com/torvalds/linux
 
+### What about Sonix OS project?
+This project is a simple operating system, **it's just for learning**, **so I don't want to create a new Linux**. so the Sonix project **will not be continued**, **but soon I will take up a new better operating system!**
+
 ### To build this OS you need to open cmd in folder where is Makefile file and write this command:
 ```shell
 make
