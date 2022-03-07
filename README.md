@@ -1,3 +1,5 @@
+### This was my first "operating system" it was so basic 
+
 # Sonix OS
 
 This is a simple **x86_64 32bit operating system**. **Sonix** name is taken from my **username Solinde**k and **crossed it with Unix name**. Kernel is written in **C Programming** language but bootloader is written in **Netwide Assembly (NASM)**.
